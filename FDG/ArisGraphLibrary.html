@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 1200px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "1. Block", "label": "1. Block", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "0. Module", "label": "0. Module", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "2. FunctionDef : show", "label": "2. FunctionDef : show", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "3. self", "label": "3. self", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "4. Block", "label": "4. Block", "labelHighlightBold": true, "shape": "dot", "size": 11}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "5. Assign", "label": "5. Assign", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "6. Name : data", "label": "6. Name : data", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "58. Call: ()", "label": "58. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 10}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "7. Dictionary", "label": "7. Dictionary", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "8. Key : nodes", "label": "8. Key : nodes", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "9. Key : edges", "label": "9. Key : edges", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "10. Assign", "label": "10. Assign", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "map_11. Name : node", "label": "map_11. Name : node", "labelHighlightBold": true, "shape": "dot", "size": 5}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "12. Name : k", "label": "12. Name : k", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "14. Tuple", "label": "14. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "13. Name : v", "label": "13. Name : v", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "15. Call: enumerate()", "label": "15. Call: enumerate()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "16. Call: ()", "label": "16. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "17. ForLoop", "label": "17. ForLoop", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "18. Tuple", "label": "18. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "id_19. Name : node", "label": "id_19. Name : node", "labelHighlightBold": true, "shape": "dot", "size": 5}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "24. Tuple", "label": "24. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "20. Name : attr", "label": "20. Name : attr", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "35. Tuple", "label": "35. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "41. Tuple", "label": "41. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "21. Call: ()", "label": "21. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "22. Constant : True", "label": "22. Constant : True", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "23. Block", "label": "23. Block", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "25. Call: ()", "label": "25. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "26. Constant : True", "label": "26. Constant : True", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "27. Expr", "label": "27. Expr", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "28. Call: ()", "label": "28. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "29. Dictionary", "label": "29. Dictionary", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "30. Key : nodeID", "label": "30. Key : nodeID", "labelHighlightBold": true, "shape": "dot", "size": 10}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "31. Key : label", "label": "31. Key : label", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "32. value : node_id", "label": "32. value : node_id", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "33. value : \u003c_ast.Name object at 0x000001F02DE1CE80\u003e", "label": "33. value : \u003c_ast.Name object at 0x000001F02DE1CE80\u003e", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "34. ForLoop", "label": "34. ForLoop", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "36. Name : source", "label": "36. Name : source", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "37. Name : target", "label": "37. Name : target", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "38. Call: ()", "label": "38. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "39. Constant : True", "label": "39. Constant : True", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "40. Block", "label": "40. Block", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "42. Call: ()", "label": "42. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "43. Constant : True", "label": "43. Constant : True", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "44. Expr", "label": "44. Expr", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "45. Call: ()", "label": "45. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "46. Dictionary", "label": "46. Dictionary", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "47. Key : source", "label": "47. Key : source", "labelHighlightBold": true, "shape": "dot", "size": 12}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "48. Key : target", "label": "48. Key : target", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "49. Key : label", "label": "49. Key : label", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "50. value : \u003c_ast.Name object at 0x000001F02DD61430\u003e", "label": "50. value : \u003c_ast.Name object at 0x000001F02DD61430\u003e", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "51. value : \u003c_ast.Name object at 0x000001F02DD61520\u003e", "label": "51. value : \u003c_ast.Name object at 0x000001F02DD61520\u003e", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "ast.Name object at 0x000001F02DD61610\u003e_52. value : \u003c", "label": "ast.Name object at 0x000001F02DD61610\u003e_52. value : \u003c", "labelHighlightBold": true, "shape": "dot", "size": 5}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "53. Call: open()", "label": "53. Call: open()", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "54. Constant : C:/Users/dodonoghue/Documents/Python-Me/Source Code/data.json", "label": "54. Constant : C:/Users/dodonoghue/Documents/Python-Me/Source Code/data.json", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "55. Constant : w", "label": "55. Constant : w", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "56. Name : outfile", "label": "56. Name : outfile", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "57. Expr", "label": "57. Expr", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "59. Constant : 4", "label": "59. Constant : 4", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "60. Constant : True", "label": "60. Constant : True", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "61. Expr", "label": "61. Expr", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "62. Call: ()", "label": "62. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "63. List", "label": "63. List", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "64. Constant : C:\\Program Files\\Mozilla Firefox\\Firefox.exe", "label": "64. Constant : C:\\Program Files\\Mozilla Firefox\\Firefox.exe", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "65. Call: ()", "label": "65. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "66. Constant : graph.html", "label": "66. Constant : graph.html", "labelHighlightBold": true, "shape": "dot", "size": 6}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "lightblue", "from": "1. Block", "label": "Contains", "to": "0. Module"}, {"arrows": "to", "color": "lightblue", "from": "2. FunctionDef : show", "label": "Contains", "to": "1. Block"}, {"arrows": "to", "color": "lightblue", "from": "3. self", "label": "Parameter", "to": "2. FunctionDef : show"}, {"arrows": "to", "color": "lightblue", "from": "4. Block", "label": "Contains", "to": "2. FunctionDef : show"}, {"arrows": "to", "color": "lightblue", "from": "5. Assign", "label": "Contains", "to": "4. Block"}, {"arrows": "to", "color": "lightblue", "from": "6. Name : data", "label": "Contains", "to": "5. Assign"}, {"arrows": "to", "color": "lightblue", "from": "6. Name : data", "label": "Parameter", "to": "58. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "7. Dictionary", "label": "Contains", "to": "5. Assign"}, {"arrows": "to", "color": "lightblue", "from": "8. Key : nodes", "label": "Contains", "to": "7. Dictionary"}, {"arrows": "to", "color": "lightblue", "from": "9. Key : edges", "label": "Contains", "to": "7. Dictionary"}, {"arrows": "to", "color": "lightblue", "from": "10. Assign", "label": "Contains", "to": "4. Block"}, {"arrows": "to", "color": "lightblue", "from": "map_11. Name : node", "label": "Contains", "to": "10. Assign"}, {"arrows": "to", "color": "lightblue", "from": "12. Name : k", "label": "Contains", "to": "map_11. Name : node"}, {"arrows": "to", "color": "lightblue", "from": "12. Name : k", "label": "Contains", "to": "14. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "13. Name : v", "label": "Contains", "to": "map_11. Name : node"}, {"arrows": "to", "color": "lightblue", "from": "13. Name : v", "label": "Contains", "to": "14. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "14. Tuple", "label": "Contains", "to": "13. Name : v"}, {"arrows": "to", "color": "lightblue", "from": "15. Call: enumerate()", "label": "Contains", "to": "13. Name : v"}, {"arrows": "to", "color": "lightblue", "from": "16. Call: ()", "label": "Parameter", "to": "15. Call: enumerate()"}, {"arrows": "to", "color": "lightblue", "from": "17. ForLoop", "label": "Contains", "to": "4. Block"}, {"arrows": "to", "color": "lightblue", "from": "18. Tuple", "label": "Contains", "to": "17. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "id_19. Name : node", "label": "Contains", "to": "18. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "id_19. Name : node", "label": "Contains", "to": "24. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "20. Name : attr", "label": "Contains", "to": "18. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "20. Name : attr", "label": "Contains", "to": "24. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "20. Name : attr", "label": "Contains", "to": "35. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "20. Name : attr", "label": "Contains", "to": "41. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "21. Call: ()", "label": "Contains", "to": "17. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "22. Constant : True", "label": "Parameter", "to": "21. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "23. Block", "label": "Contains", "to": "17. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "24. Tuple", "label": "Contains", "to": "23. Block"}, {"arrows": "to", "color": "lightblue", "from": "25. Call: ()", "label": "Contains", "to": "23. Block"}, {"arrows": "to", "color": "lightblue", "from": "26. Constant : True", "label": "Parameter", "to": "25. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "27. Expr", "label": "Contains", "to": "23. Block"}, {"arrows": "to", "color": "lightblue", "from": "28. Call: ()", "label": "Contains", "to": "27. Expr"}, {"arrows": "to", "color": "lightblue", "from": "29. Dictionary", "label": "Parameter", "to": "28. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "30. Key : nodeID", "label": "Contains", "to": "30. Key : nodeID"}, {"arrows": "to", "color": "lightblue", "from": "31. Key : label", "label": "Contains", "to": "30. Key : nodeID"}, {"arrows": "to", "color": "lightblue", "from": "32. value : node_id", "label": "Contains", "to": "30. Key : nodeID"}, {"arrows": "to", "color": "lightblue", "from": "33. value : \u003c_ast.Name object at 0x000001F02DE1CE80\u003e", "label": "Contains", "to": "30. Key : nodeID"}, {"arrows": "to", "color": "lightblue", "from": "34. ForLoop", "label": "Contains", "to": "4. Block"}, {"arrows": "to", "color": "lightblue", "from": "35. Tuple", "label": "Contains", "to": "34. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "36. Name : source", "label": "Contains", "to": "35. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "36. Name : source", "label": "Contains", "to": "41. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "37. Name : target", "label": "Contains", "to": "35. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "37. Name : target", "label": "Contains", "to": "41. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "38. Call: ()", "label": "Contains", "to": "34. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "39. Constant : True", "label": "Parameter", "to": "38. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "40. Block", "label": "Contains", "to": "34. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "41. Tuple", "label": "Contains", "to": "40. Block"}, {"arrows": "to", "color": "lightblue", "from": "42. Call: ()", "label": "Contains", "to": "40. Block"}, {"arrows": "to", "color": "lightblue", "from": "43. Constant : True", "label": "Parameter", "to": "42. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "44. Expr", "label": "Contains", "to": "40. Block"}, {"arrows": "to", "color": "lightblue", "from": "45. Call: ()", "label": "Contains", "to": "44. Expr"}, {"arrows": "to", "color": "lightblue", "from": "46. Dictionary", "label": "Parameter", "to": "45. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "47. Key : source", "label": "Contains", "to": "47. Key : source"}, {"arrows": "to", "color": "lightblue", "from": "48. Key : target", "label": "Contains", "to": "47. Key : source"}, {"arrows": "to", "color": "lightblue", "from": "49. Key : label", "label": "Contains", "to": "47. Key : source"}, {"arrows": "to", "color": "lightblue", "from": "50. value : \u003c_ast.Name object at 0x000001F02DD61430\u003e", "label": "Contains", "to": "47. Key : source"}, {"arrows": "to", "color": "lightblue", "from": "51. value : \u003c_ast.Name object at 0x000001F02DD61520\u003e", "label": "Contains", "to": "47. Key : source"}, {"arrows": "to", "color": "lightblue", "from": "ast.Name object at 0x000001F02DD61610\u003e_52. value : \u003c", "label": "Contains", "to": "47. Key : source"}, {"arrows": "to", "color": "lightblue", "from": "53. Call: open()", "label": "Contains", "to": "ast.Name object at 0x000001F02DD61610\u003e_52. value : \u003c"}, {"arrows": "to", "color": "lightblue", "from": "54. Constant : C:/Users/dodonoghue/Documents/Python-Me/Source Code/data.json", "label": "Parameter", "to": "53. Call: open()"}, {"arrows": "to", "color": "lightblue", "from": "55. Constant : w", "label": "Parameter", "to": "53. Call: open()"}, {"arrows": "to", "color": "lightblue", "from": "56. Name : outfile", "label": "Contains", "to": "ast.Name object at 0x000001F02DD61610\u003e_52. value : \u003c"}, {"arrows": "to", "color": "lightblue", "from": "56. Name : outfile", "label": "Parameter", "to": "58. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "57. Expr", "label": "Contains", "to": "ast.Name object at 0x000001F02DD61610\u003e_52. value : \u003c"}, {"arrows": "to", "color": "lightblue", "from": "58. Call: ()", "label": "Contains", "to": "57. Expr"}, {"arrows": "to", "color": "lightblue", "from": "59. Constant : 4", "label": "Parameter", "to": "58. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "60. Constant : True", "label": "Parameter", "to": "58. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "61. Expr", "label": "Contains", "to": "4. Block"}, {"arrows": "to", "color": "lightblue", "from": "62. Call: ()", "label": "Contains", "to": "61. Expr"}, {"arrows": "to", "color": "lightblue", "from": "63. List", "label": "Parameter", "to": "62. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "64. Constant : C:\\Program Files\\Mozilla Firefox\\Firefox.exe", "label": "Contains", "to": "63. List"}, {"arrows": "to", "color": "lightblue", "from": "65. Call: ()", "label": "Contains", "to": "63. List"}, {"arrows": "to", "color": "lightblue", "from": "66. Constant : graph.html", "label": "Parameter", "to": "65. Call: ()"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

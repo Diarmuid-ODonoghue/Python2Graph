@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 1200px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "1. Block", "label": "1. Block", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "0. Module", "label": "0. Module", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "over_sents_2. FunctionDef : loop", "label": "over_sents_2. FunctionDef : loop", "labelHighlightBold": true, "shape": "dot", "size": 5}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "3. Name : sents", "label": "3. Name : sents", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "6. ForLoop", "label": "6. ForLoop", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "8. Block", "label": "8. Block", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "4. Name : label", "label": "4. Name : label", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "10. Call: print()", "label": "10. Call: print()", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "5. Block", "label": "5. Block", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "7. Name : sent", "label": "7. Name : sent", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "continuous_chunks()_12. Call: get", "label": "continuous_chunks()_12. Call: get", "labelHighlightBold": true, "shape": "dot", "size": 5}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "9. Expr", "label": "9. Expr", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "11. Constant : :", "label": "11. Constant : :", "labelHighlightBold": true, "shape": "dot", "size": 6}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "lightblue", "from": "1. Block", "label": "Contains", "to": "0. Module"}, {"arrows": "to", "color": "lightblue", "from": "over_sents_2. FunctionDef : loop", "label": "Contains", "to": "1. Block"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : sents", "label": "Parameter", "to": "over_sents_2. FunctionDef : loop"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : sents", "label": "Contains", "to": "6. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : sents", "label": "Contains", "to": "8. Block"}, {"arrows": "to", "color": "lightblue", "from": "4. Name : label", "label": "Parameter", "to": "over_sents_2. FunctionDef : loop"}, {"arrows": "to", "color": "lightblue", "from": "4. Name : label", "label": "Parameter", "to": "10. Call: print()"}, {"arrows": "to", "color": "lightblue", "from": "5. Block", "label": "Contains", "to": "over_sents_2. FunctionDef : loop"}, {"arrows": "to", "color": "lightblue", "from": "6. ForLoop", "label": "Contains", "to": "5. Block"}, {"arrows": "to", "color": "lightblue", "from": "7. Name : sent", "label": "Contains", "to": "6. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "7. Name : sent", "label": "Contains", "to": "8. Block"}, {"arrows": "to", "color": "lightblue", "from": "7. Name : sent", "label": "Parameter", "to": "continuous_chunks()_12. Call: get"}, {"arrows": "to", "color": "lightblue", "from": "8. Block", "label": "Contains", "to": "6. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "9. Expr", "label": "Contains", "to": "8. Block"}, {"arrows": "to", "color": "lightblue", "from": "10. Call: print()", "label": "Contains", "to": "9. Expr"}, {"arrows": "to", "color": "lightblue", "from": "11. Constant : :", "label": "Parameter", "to": "10. Call: print()"}, {"arrows": "to", "color": "lightblue", "from": "continuous_chunks()_12. Call: get", "label": "Parameter", "to": "10. Call: print()"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

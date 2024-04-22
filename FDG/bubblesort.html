@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 1200px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "1. Block", "label": "1. Block", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "0. Module", "label": "0. Module", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "2. FunctionDef : bubbleSort", "label": "2. FunctionDef : bubbleSort", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "3. Name : arr", "label": "3. Name : arr", "labelHighlightBold": true, "shape": "dot", "size": 11}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "7. Call: len()", "label": "7. Call: len()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "32. CompareOp: \u003e", "label": "32. CompareOp: \u003e", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "36. Tuple", "label": "36. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "39. Tuple", "label": "39. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "41. Constant : 1", "label": "41. Constant : 1", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "4. Block", "label": "4. Block", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "5. Assign", "label": "5. Assign", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "6. Name : n", "label": "6. Name : n", "labelHighlightBold": true, "shape": "dot", "size": 10}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "11. BinOp", "label": "11. BinOp", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "15. BinOp", "label": "15. BinOp", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "22. BinOp", "label": "22. BinOp", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "28. BinOp", "label": "28. BinOp", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "8. ForLoop", "label": "8. ForLoop", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "9. Name : i", "label": "9. Name : i", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "13. Block", "label": "13. Block", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "10. Call: range()", "label": "10. Call: range()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "12. Constant : 1", "label": "12. Constant : 1", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "14. Call: range()", "label": "14. Call: range()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "16. Constant : 1", "label": "16. Constant : 1", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "17. ForLoop", "label": "17. ForLoop", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "18. Name : j", "label": "18. Name : j", "labelHighlightBold": true, "shape": "dot", "size": 13}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "24. Block", "label": "24. Block", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "33. mathOp: +", "label": "33. mathOp: +", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "37. mathOp: +", "label": "37. mathOp: +", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "40. mathOp: +", "label": "40. mathOp: +", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "19. Call: range()", "label": "19. Call: range()", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "20. Constant : 0", "label": "20. Constant : 0", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "21. BinOp", "label": "21. BinOp", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "23. Constant : 1", "label": "23. Constant : 1", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "25. Call: range()", "label": "25. Call: range()", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "26. Constant : 0", "label": "26. Constant : 0", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "27. BinOp", "label": "27. BinOp", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "29. Constant : 1", "label": "29. Constant : 1", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "30. If", "label": "30. If", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "31. Block", "label": "31. Block", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "34. Constant : 1", "label": "34. Constant : 1", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "35. Assign", "label": "35. Assign", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "38. Constant : 1", "label": "38. Constant : 1", "labelHighlightBold": true, "shape": "dot", "size": 6}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "lightblue", "from": "1. Block", "label": "Contains", "to": "0. Module"}, {"arrows": "to", "color": "lightblue", "from": "2. FunctionDef : bubbleSort", "label": "Contains", "to": "1. Block"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : arr", "label": "Parameter", "to": "2. FunctionDef : bubbleSort"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : arr", "label": "Parameter", "to": "7. Call: len()"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : arr", "label": "Compare", "to": "32. CompareOp: \u003e"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : arr", "label": "Contains", "to": "36. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : arr", "label": "Contains", "to": "39. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "3. Name : arr", "label": "Contains", "to": "41. Constant : 1"}, {"arrows": "to", "color": "lightblue", "from": "4. Block", "label": "Contains", "to": "2. FunctionDef : bubbleSort"}, {"arrows": "to", "color": "lightblue", "from": "5. Assign", "label": "Contains", "to": "4. Block"}, {"arrows": "to", "color": "lightblue", "from": "6. Name : n", "label": "Contains", "to": "5. Assign"}, {"arrows": "to", "color": "lightblue", "from": "6. Name : n", "label": "Contains", "to": "11. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "6. Name : n", "label": "Contains", "to": "15. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "6. Name : n", "label": "Contains", "to": "22. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "6. Name : n", "label": "Contains", "to": "28. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "7. Call: len()", "label": "Contains", "to": "5. Assign"}, {"arrows": "to", "color": "lightblue", "from": "8. ForLoop", "label": "Contains", "to": "4. Block"}, {"arrows": "to", "color": "lightblue", "from": "9. Name : i", "label": "Contains", "to": "8. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "9. Name : i", "label": "Contains", "to": "13. Block"}, {"arrows": "to", "color": "lightblue", "from": "9. Name : i", "label": "Contains", "to": "22. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "9. Name : i", "label": "Contains", "to": "28. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "10. Call: range()", "label": "Contains", "to": "8. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "11. BinOp", "label": "Parameter", "to": "10. Call: range()"}, {"arrows": "to", "color": "lightblue", "from": "12. Constant : 1", "label": "Contains", "to": "11. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "13. Block", "label": "Contains", "to": "8. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "14. Call: range()", "label": "Contains", "to": "13. Block"}, {"arrows": "to", "color": "lightblue", "from": "15. BinOp", "label": "Parameter", "to": "14. Call: range()"}, {"arrows": "to", "color": "lightblue", "from": "16. Constant : 1", "label": "Contains", "to": "15. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "17. ForLoop", "label": "Contains", "to": "13. Block"}, {"arrows": "to", "color": "lightblue", "from": "18. Name : j", "label": "Contains", "to": "17. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "18. Name : j", "label": "Contains", "to": "24. Block"}, {"arrows": "to", "color": "lightblue", "from": "18. Name : j", "label": "Compare", "to": "32. CompareOp: \u003e"}, {"arrows": "to", "color": "lightblue", "from": "18. Name : j", "label": "Contains", "to": "33. mathOp: +"}, {"arrows": "to", "color": "lightblue", "from": "18. Name : j", "label": "Contains", "to": "36. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "18. Name : j", "label": "Contains", "to": "37. mathOp: +"}, {"arrows": "to", "color": "lightblue", "from": "18. Name : j", "label": "Contains", "to": "40. mathOp: +"}, {"arrows": "to", "color": "lightblue", "from": "18. Name : j", "label": "Contains", "to": "41. Constant : 1"}, {"arrows": "to", "color": "lightblue", "from": "19. Call: range()", "label": "Contains", "to": "17. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "20. Constant : 0", "label": "Parameter", "to": "19. Call: range()"}, {"arrows": "to", "color": "lightblue", "from": "21. BinOp", "label": "Parameter", "to": "19. Call: range()"}, {"arrows": "to", "color": "lightblue", "from": "22. BinOp", "label": "Contains", "to": "21. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "23. Constant : 1", "label": "Contains", "to": "21. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "24. Block", "label": "Contains", "to": "17. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "25. Call: range()", "label": "Contains", "to": "24. Block"}, {"arrows": "to", "color": "lightblue", "from": "26. Constant : 0", "label": "Parameter", "to": "25. Call: range()"}, {"arrows": "to", "color": "lightblue", "from": "27. BinOp", "label": "Parameter", "to": "25. Call: range()"}, {"arrows": "to", "color": "lightblue", "from": "28. BinOp", "label": "Contains", "to": "27. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "29. Constant : 1", "label": "Contains", "to": "27. BinOp"}, {"arrows": "to", "color": "lightblue", "from": "30. If", "label": "Contains", "to": "24. Block"}, {"arrows": "to", "color": "lightblue", "from": "31. Block", "label": "Contains", "to": "30. If"}, {"arrows": "to", "color": "lightblue", "from": "32. CompareOp: \u003e", "label": "Condition", "to": "30. If"}, {"arrows": "to", "color": "lightblue", "from": "33. mathOp: +", "label": "Compare", "to": "32. CompareOp: \u003e"}, {"arrows": "to", "color": "lightblue", "from": "34. Constant : 1", "label": "Contains", "to": "33. mathOp: +"}, {"arrows": "to", "color": "lightblue", "from": "35. Assign", "label": "Contains", "to": "31. Block"}, {"arrows": "to", "color": "lightblue", "from": "36. Tuple", "label": "Contains", "to": "35. Assign"}, {"arrows": "to", "color": "lightblue", "from": "37. mathOp: +", "label": "Contains", "to": "36. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "38. Constant : 1", "label": "Contains", "to": "37. mathOp: +"}, {"arrows": "to", "color": "lightblue", "from": "39. Tuple", "label": "Contains", "to": "35. Assign"}, {"arrows": "to", "color": "lightblue", "from": "40. mathOp: +", "label": "Contains", "to": "39. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "41. Constant : 1", "label": "Contains", "to": "40. mathOp: +"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

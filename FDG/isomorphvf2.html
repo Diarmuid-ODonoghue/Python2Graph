@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 1200px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "1. Block", "label": "1. Block", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "0. Module", "label": "0. Module", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "2. FunctionDef : pprintMapping", "label": "2. FunctionDef : pprintMapping", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "3. Block", "label": "3. Block", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "4. If", "label": "4. If", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "5. Block", "label": "5. Block", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "6. CompareOp: ==", "label": "6. CompareOp: ==", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "7. Call: len()", "label": "7. Call: len()", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "8. Name : GM.mapping", "label": "8. Name : GM.mapping", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "10. Assign", "label": "10. Assign", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "9. Constant : 0", "label": "9. Constant : 0", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "11. Call: ()", "label": "11. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "12. ForLoop", "label": "12. ForLoop", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "13. Tuple", "label": "13. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "14. Name : key", "label": "14. Name : key", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "18. Tuple", "label": "18. Tuple", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "22. Call: ()", "label": "22. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "15. Name : val", "label": "15. Name : val", "labelHighlightBold": true, "shape": "dot", "size": 8}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "16. Call: ()", "label": "16. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "17. Block", "label": "17. Block", "labelHighlightBold": true, "shape": "dot", "size": 9}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "19. Call: ()", "label": "19. Call: ()", "labelHighlightBold": true, "shape": "dot", "size": 6}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "20. Expr", "label": "20. Expr", "labelHighlightBold": true, "shape": "dot", "size": 7}, {"border": "blue", "borderWidth": 1, "edgecolor": "lightblue", "id": "21. Call: print()", "label": "21. Call: print()", "labelHighlightBold": true, "shape": "dot", "size": 7}]);
+        edges = new vis.DataSet([{"arrows": "to", "color": "lightblue", "from": "1. Block", "label": "Contains", "to": "0. Module"}, {"arrows": "to", "color": "lightblue", "from": "2. FunctionDef : pprintMapping", "label": "Contains", "to": "1. Block"}, {"arrows": "to", "color": "lightblue", "from": "3. Block", "label": "Contains", "to": "2. FunctionDef : pprintMapping"}, {"arrows": "to", "color": "lightblue", "from": "4. If", "label": "Contains", "to": "3. Block"}, {"arrows": "to", "color": "lightblue", "from": "5. Block", "label": "Contains", "to": "4. If"}, {"arrows": "to", "color": "lightblue", "from": "6. CompareOp: ==", "label": "Condition", "to": "4. If"}, {"arrows": "to", "color": "lightblue", "from": "7. Call: len()", "label": "Compare", "to": "6. CompareOp: =="}, {"arrows": "to", "color": "lightblue", "from": "8. Name : GM.mapping", "label": "Parameter", "to": "7. Call: len()"}, {"arrows": "to", "color": "lightblue", "from": "8. Name : GM.mapping", "label": "Attribute", "to": "10. Assign"}, {"arrows": "to", "color": "lightblue", "from": "9. Constant : 0", "label": "Compare", "to": "6. CompareOp: =="}, {"arrows": "to", "color": "lightblue", "from": "10. Assign", "label": "Contains", "to": "5. Block"}, {"arrows": "to", "color": "lightblue", "from": "11. Call: ()", "label": "Contains", "to": "10. Assign"}, {"arrows": "to", "color": "lightblue", "from": "12. ForLoop", "label": "Contains", "to": "3. Block"}, {"arrows": "to", "color": "lightblue", "from": "13. Tuple", "label": "Contains", "to": "12. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "14. Name : key", "label": "Contains", "to": "13. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "14. Name : key", "label": "Contains", "to": "18. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "14. Name : key", "label": "Parameter", "to": "22. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "15. Name : val", "label": "Contains", "to": "13. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "15. Name : val", "label": "Contains", "to": "18. Tuple"}, {"arrows": "to", "color": "lightblue", "from": "15. Name : val", "label": "Parameter", "to": "22. Call: ()"}, {"arrows": "to", "color": "lightblue", "from": "16. Call: ()", "label": "Contains", "to": "12. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "17. Block", "label": "Contains", "to": "12. ForLoop"}, {"arrows": "to", "color": "lightblue", "from": "18. Tuple", "label": "Contains", "to": "17. Block"}, {"arrows": "to", "color": "lightblue", "from": "19. Call: ()", "label": "Contains", "to": "17. Block"}, {"arrows": "to", "color": "lightblue", "from": "20. Expr", "label": "Contains", "to": "17. Block"}, {"arrows": "to", "color": "lightblue", "from": "21. Call: print()", "label": "Contains", "to": "20. Expr"}, {"arrows": "to", "color": "lightblue", "from": "22. Call: ()", "label": "Parameter", "to": "21. Call: print()"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
